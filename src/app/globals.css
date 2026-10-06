@@ -1,0 +1,179 @@
+@import "tailwindcss";
+
+:root {
+  --ink: #f5f7fa;
+  --muted: #8fb8cc;
+  --line: rgba(63, 197, 240, 0.18);
+  --paper: #122841;
+  --sand: #0c1e2e;
+  --navy: #0f2a40;
+  --navy-deep: #08131f;
+  --navy-light: #0c1e2e;
+  --gold: #f0c24b;
+  --gold-deep: #d4a83c;
+  --gold-soft: #f5d685;
+  --cyan: #3fc5f0;
+  --cyan-deep: #1e88c7;
+  --cyan-soft: #8fb8cc;
+}
+
+@theme inline {
+  --color-ink: var(--ink);
+  --color-muted: var(--muted);
+  --color-line: var(--line);
+  --color-paper: var(--paper);
+  --color-sand: var(--sand);
+  --color-navy: var(--navy);
+  --color-navy-deep: var(--navy-deep);
+  --color-navy-light: var(--navy-light);
+  --color-gold: var(--gold);
+  --color-gold-deep: var(--gold-deep);
+  --color-gold-soft: var(--gold-soft);
+  --color-cyan: var(--cyan);
+  --color-cyan-deep: var(--cyan-deep);
+  --color-cyan-soft: var(--cyan-soft);
+  --font-serif: var(--font-figtree);
+  --font-sans: var(--font-figtree);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--paper);
+  color: var(--ink);
+  line-height: 1.5;
+  overflow-x: hidden;
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+}
+
+@keyframes floatY {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@keyframes ripple {
+  to {
+    transform: scale(3);
+    opacity: 0;
+  }
+}
+@keyframes kenburns {
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(1.08);
+  }
+}
+.animate-kenburns {
+  animation: kenburns 20s ease-in-out infinite alternate;
+}
+.animate-float {
+  animation: floatY 2s ease-in-out infinite;
+}
+.animate-fade-down {
+  opacity: 0;
+  animation: fadeInDown 0.9s ease forwards;
+}
+.ripple-span {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.45);
+  transform: scale(0);
+  animation: ripple 0.6s linear;
+  pointer-events: none;
+}
+
+nav a.nav-link {
+  position: relative;
+}
+nav a.nav-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -4px;
+  height: 1px;
+  width: 0;
+  background: var(--gold);
+  transition: width 0.3s ease;
+}
+nav a.nav-link:hover::after {
+  width: 100%;
+}
+
+@keyframes heroRise {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.animate-hero-rise {
+  animation: heroRise 0.9s cubic-bezier(0.33, 1, 0.68, 1) both;
+}
+@keyframes slideProgress {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+/* Text link with a sliding arrow ("explore our work →") */
+.arrow-link::after {
+  content: "→";
+  display: inline-block;
+  margin-left: 12px;
+  color: var(--gold);
+  transition: transform 0.44s cubic-bezier(0.33, 1, 0.68, 1);
+}
+.arrow-link:hover::after {
+  transform: translateX(10px);
+}
+
+/* Infinite logo strip (track contains the list twice) */
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(calc(-50% - 10px));
+  }
+}
+.animate-marquee {
+  animation: marquee 45s linear infinite;
+}
+.animate-marquee-reverse {
+  animation: marquee 45s linear infinite reverse;
+}
+@media (prefers-reduced-motion: reduce) {
+  .animate-marquee,
+  .animate-marquee-reverse {
+    animation: none;
+  }
+}
