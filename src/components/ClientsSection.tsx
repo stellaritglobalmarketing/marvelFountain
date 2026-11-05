@@ -38,9 +38,8 @@ export default async function ClientsSection() {
           </h2>
         </div>
         <p className="text-[15.5px] font-light leading-relaxed text-muted">
-          We wish to develop good &amp; long-lasting business relationships with our clients. Superior quality products
-          are offered at the most competitive rates, and every order reaches our clients on time and in the desired
-          condition.
+          We wish to develop good &amp; long-lasting business relationships with our clients. Every order is built to a
+          high standard and reaches our clients on time and in the desired condition.
         </p>
       </Reveal>
       <div className="relative z-[1]">

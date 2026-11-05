@@ -98,7 +98,7 @@ export default async function Home() {
                 </span>
                 .
               </strong>{" "}
-              Founded in 1998, we build all types of static, programmable, architectural, floating, sequential and
+              Founded in 1998, we build all types of programmable, architectural, floating, sequential and
               musical fountains — always looking for new creative &amp; innovative solutions for our customers.
             </p>
           </Reveal>

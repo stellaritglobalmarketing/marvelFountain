@@ -126,3 +126,14 @@ UPDATE menu_links SET label = 'Musical Dancing Fountains' WHERE href = '/product
 -- Custom & installation photos; home page keeps a full grid after the removals
 UPDATE collections SET image = '/media/wf7.jpg', home_title = NULL, home_order = 3 WHERE title = 'Custom Design';
 UPDATE collections SET image = '/media/pro18.jpg', home_order = 6 WHERE title = 'Installation & Maintenance';
+
+-- Content clean-up: sample labels and specs, price wording, "static" wording
+UPDATE products SET badge = '' WHERE badge IN ('Bestseller', 'New', 'Popular', 'Premium', 'Custom', 'Trending');
+DELETE s FROM product_specs s JOIN products p ON p.id = s.product_id
+WHERE p.slug IN ('classic-garden-fountain', 'wall-mounted-water-feature', 'grand-entrance-fountain', 'modern-pool-fountain');
+UPDATE content_blocks SET body = 'We wish to develop good & long lasting business relationships with our clients, built on superior quality products and dependable service.'
+  WHERE section = 'about_strengths_b' AND title = 'Clientele';
+UPDATE content_blocks SET body = REPLACE(body, 'all types of Static, Programmable', 'all types of Programmable')
+  WHERE section = 'about_story' AND title = 'Who we are';
+UPDATE settings SET v = REPLACE(v, 'since 1998 — static, programmable', 'since 1998 — programmable')
+  WHERE k = 'footer_tagline';
