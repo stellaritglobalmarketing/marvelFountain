@@ -137,3 +137,35 @@ UPDATE content_blocks SET body = REPLACE(body, 'all types of Static, Programmabl
   WHERE section = 'about_story' AND title = 'Who we are';
 UPDATE settings SET v = REPLACE(v, 'since 1998 — static, programmable', 'since 1998 — programmable')
   WHERE k = 'footer_tagline';
+
+-- Client photos (November 20)
+UPDATE settings SET v = '/media/client/manufacturing.jpg'
+  WHERE k = 'about_image' AND v IN ('/media/about-fountain.jpg', '/media/pro17.jpg');
+UPDATE collections SET image = '/media/client/custom-design.jpg' WHERE title = 'Custom Design';
+UPDATE collections SET image = '/media/client/maintenance.jpg' WHERE title = 'Installation & Maintenance';
+UPDATE collections SET image = '/media/client/laser-water-1.jpg' WHERE href = '/products/laser-shows';
+UPDATE collections SET image = '/media/client/floating-musical.jpg' WHERE href = '/products/floating-musical-fountains';
+UPDATE collections SET image = '/media/client/jumping-jet-1.jpg' WHERE href = '/products/jumping-jet-fountains';
+UPDATE collections SET image = '/media/client/musical-show.jpg' WHERE href = '/products/musical-fountains';
+
+DELETE i FROM product_images i JOIN products p ON p.id = i.product_id
+WHERE p.slug IN ('laser-shows', 'floating-musical-fountains', 'jumping-jet-fountains')
+   OR i.url LIKE '/media/client/%';
+INSERT INTO product_images (product_id, url, sort_order)
+SELECT p.id, n.url, n.sort_order FROM (
+  SELECT 'laser-shows' AS slug, '/media/client/laser-water-1.jpg' AS url, 1 AS sort_order
+  UNION ALL SELECT 'laser-shows', '/media/client/laser-water-2.jpg', 2
+  UNION ALL SELECT 'laser-shows', '/media/client/projection-show.jpg', 3
+  UNION ALL SELECT 'floating-musical-fountains', '/media/client/floating-musical.jpg', 1
+  UNION ALL SELECT 'floating-musical-fountains', '/media/ff4.jpg', 2
+  UNION ALL SELECT 'jumping-jet-fountains', '/media/client/jumping-jet-1.jpg', 1
+  UNION ALL SELECT 'jumping-jet-fountains', '/media/client/jumping-jet-2.jpg', 2
+  UNION ALL SELECT 'musical-fountains', '/media/client/musical-show.jpg', -1
+) n JOIN products p ON p.slug = n.slug;
+
+-- Client details: control panels and rental shows
+UPDATE products SET description = 'Water and light that move to the beat of the music. Our control panels are designed around each fountain, so every jet and light follows the soundtrack precisely.\n\nWe build musical fountain control panels with a fully automated system, including VFD drive and sensor-based panels, and our technicians test every panel on site.\n\nWe plan, build and install complete musical fountain systems, including lighting and programming, for any music you choose.' WHERE slug = 'musical-fountains';
+UPDATE products SET description = 'Musical fountains run by DMX-controllable panels, which give precise, programmable control of jets and lights for detailed, repeatable shows.' WHERE slug = 'dmx-musical-fountains';
+UPDATE products SET description = 'Fountains with pre-set patterns of water and light that run automatically from our programmable fountain control panels. Shows can be planned to suit your site and the look you want.' WHERE slug = 'programmable-fountains';
+UPDATE products SET description = 'Laser projections that add a striking visual layer to a night-time water show. They can be combined with musical fountains and multimedia for parks, events and public attractions.\n\nRental shows are also available.' WHERE slug = 'laser-shows';
+UPDATE products SET description = 'Water, light and music choreographed into one live show. Jets rise, sway and change colour in time with the soundtrack you choose.\n\nMusical dancing fountains suit public parks, amusement parks, lakes, malls, five-star hotels and resorts, and can be scaled from compact installations to the largest outdoor venues. Rental shows are also available.\n\nWe design fountains as you need, and handle the complete project: site survey, design, manufacturing, installation and programming.' WHERE slug = 'dancing-fountains';
