@@ -120,6 +120,37 @@ export default async function ProductDetailPage({
         </div>
       </section>
 
+      {/* Musical dancing fountains highlight — client text from PHOTO & DETAILS.pdf */}
+      {slug === "dancing-fountains" && (
+        <section className="px-7 pb-20 max-md:px-4">
+          <Reveal className="mx-auto max-w-[1240px] rounded-2xl border border-gold/30 bg-navy-deep px-8 py-12 text-center max-md:px-5 max-md:py-10">
+            <h2 className="font-serif text-[clamp(28px,4vw,44px)] font-bold leading-tight text-ink">
+              Extreme Musical Fountains &amp;{" "}
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-gold to-cyan italic">Laser Shows</span>
+            </h2>
+            <p className="mt-4 text-[17px] font-light text-muted">
+              Exemplary crowd pleaser — a spectacular addition to any venue.
+            </p>
+            <div className="mt-8 flex flex-wrap justify-center gap-3">
+              {[
+                { label: "Floating Musical Fountains", href: "/products/floating-musical-fountains" },
+                { label: "DMX Controllable Musical Fountains", href: "/products/dmx-musical-fountains" },
+                { label: "Laser Shows", href: "/products/laser-shows" },
+                { label: "Rental Shows", href: "/contact" },
+              ].map((t) => (
+                <Link
+                  key={t.label}
+                  href={t.href}
+                  className="rounded-full border border-cyan/50 px-5 py-2.5 text-xs font-semibold uppercase tracking-widest text-cyan transition-colors hover:bg-cyan/10"
+                >
+                  {t.label}
+                </Link>
+              ))}
+            </div>
+          </Reveal>
+        </section>
+      )}
+
       {/* Control panel process — client photos from Details.pdf */}
       {slug === "musical-fountains" && (
         <section className="bg-sand px-7 py-20 max-md:px-4 max-md:py-16 mb-20">
