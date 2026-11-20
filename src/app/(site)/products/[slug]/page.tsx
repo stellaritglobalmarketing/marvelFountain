@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import Reveal from "@/components/Reveal";
@@ -118,6 +119,42 @@ export default async function ProductDetailPage({
           </Reveal>
         </div>
       </section>
+
+      {/* Control panel process — client photos from Details.pdf */}
+      {slug === "musical-fountains" && (
+        <section className="bg-sand px-7 py-20 max-md:px-4 max-md:py-16 mb-20">
+          <div className="max-w-[1240px] mx-auto">
+            <Reveal className="mb-10 max-w-[720px]">
+              <div className="flex items-center gap-3.5 mb-4.5 text-gold text-xs font-semibold tracking-[3px] uppercase before:content-[''] before:w-8.5 before:h-px before:bg-gold">
+                Our Process
+              </div>
+              <h2 className="text-[clamp(26px,3.6vw,38px)] font-bold text-ink font-serif max-md:text-[36px] max-md:leading-[1.05]">
+                Musical fountain control panel with fully automation system
+              </h2>
+              <p className="mt-4 text-muted font-light">
+                DMX controllable panels · Programmable fountain control panels · VFD drives / sensor-based control panels
+              </p>
+            </Reveal>
+            <div className="grid max-w-[860px] gap-5 grid-cols-3 max-sm:grid-cols-1 max-sm:max-w-[360px]">
+              {[
+                { src: "/media/client/control-panel.jpg", title: "Control panel with full automation" },
+                { src: "/media/client/panel-testing.jpg", title: "On-site testing of control panels by our technician" },
+                { src: "/media/client/control-room.jpg", title: "Show programming and control room" },
+              ].map((s, i) => (
+                <Reveal key={s.src} delay={i * 0.1} className="overflow-hidden rounded-2xl border border-line bg-paper">
+                  <div className="relative aspect-[4/3] bg-navy-deep">
+                    <Image src={s.src} alt={s.title} fill sizes="(max-width: 640px) 360px, 290px" className="object-cover" />
+                  </div>
+                  <div className="flex items-start gap-2.5 p-3.5">
+                    <span className="font-serif text-lg font-bold text-gold">{String(i + 1).padStart(2, "0")}</span>
+                    <span className="text-[13px] leading-snug text-ink">{s.title}</span>
+                  </div>
+                </Reveal>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
 
       <Reveal className="max-w-[1240px] mx-auto mb-7.5 px-7 max-md:mb-10 max-md:px-4">
         <div className="flex items-center gap-3.5 mb-2.5 text-gold text-xs font-semibold tracking-[3px] uppercase before:content-[''] before:w-8.5 before:h-px before:bg-gold">

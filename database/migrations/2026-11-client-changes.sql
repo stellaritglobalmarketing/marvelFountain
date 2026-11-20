@@ -169,3 +169,40 @@ UPDATE products SET description = 'Musical fountains run by DMX-controllable pan
 UPDATE products SET description = 'Fountains with pre-set patterns of water and light that run automatically from our programmable fountain control panels. Shows can be planned to suit your site and the look you want.' WHERE slug = 'programmable-fountains';
 UPDATE products SET description = 'Laser projections that add a striking visual layer to a night-time water show. They can be combined with musical fountains and multimedia for parks, events and public attractions.\n\nRental shows are also available.' WHERE slug = 'laser-shows';
 UPDATE products SET description = 'Water, light and music choreographed into one live show. Jets rise, sway and change colour in time with the soundtrack you choose.\n\nMusical dancing fountains suit public parks, amusement parks, lakes, malls, five-star hotels and resorts, and can be scaled from compact installations to the largest outdoor venues. Rental shows are also available.\n\nWe design fountains as you need, and handle the complete project: site survey, design, manufacturing, installation and programming.' WHERE slug = 'dancing-fountains';
+
+-- Musical Fountains: only the client's photo, old photos removed
+DELETE i FROM product_images i JOIN products p ON p.id = i.product_id
+WHERE p.slug = 'musical-fountains' AND i.url NOT LIKE '/media/client/%';
+
+-- Musical Fountains gallery: all of the client's fountain and show photos
+DELETE i FROM product_images i JOIN products p ON p.id = i.product_id WHERE p.slug = 'musical-fountains';
+INSERT INTO product_images (product_id, url, sort_order)
+SELECT p.id, n.url, n.sort_order FROM (
+  SELECT '/media/client/musical-show.jpg' AS url, 1 AS sort_order
+  UNION ALL SELECT '/media/client/floating-musical.jpg', 2
+  UNION ALL SELECT '/media/client/jumping-jet-1.jpg', 3
+  UNION ALL SELECT '/media/client/jumping-jet-2.jpg', 4
+  UNION ALL SELECT '/media/client/laser-water-1.jpg', 5
+  UNION ALL SELECT '/media/client/laser-water-2.jpg', 6
+  UNION ALL SELECT '/media/client/projection-show.jpg', 7
+  UNION ALL SELECT '/media/client/custom-design.jpg', 8
+) n JOIN products p ON p.slug = 'musical-fountains';
+
+-- PDF photos: control panels and musical show
+INSERT INTO product_images (product_id, url, sort_order)
+SELECT p.id, n.url, n.sort_order FROM (
+  SELECT 'musical-fountains' AS slug, '/media/client/musical-show-2.jpg' AS url, 2 AS sort_order
+  UNION ALL SELECT 'musical-fountains', '/media/client/control-panel.jpg', 9
+  UNION ALL SELECT 'musical-fountains', '/media/client/panel-testing.jpg', 10
+  UNION ALL SELECT 'musical-fountains', '/media/client/control-room.jpg', 11
+  UNION ALL SELECT 'dmx-musical-fountains', '/media/client/control-panel.jpg', 3
+  UNION ALL SELECT 'dmx-musical-fountains', '/media/client/panel-testing.jpg', 4
+  UNION ALL SELECT 'programmable-fountains', '/media/client/control-panel.jpg', 3
+  UNION ALL SELECT 'programmable-fountains', '/media/client/control-room.jpg', 4
+) n JOIN products p ON p.slug = n.slug
+WHERE NOT EXISTS (SELECT 1 FROM product_images x WHERE x.product_id = p.id AND x.url = n.url);
+
+-- Control panel photos now have their own "Our Process" section on the Musical Fountains page
+DELETE i FROM product_images i JOIN products p ON p.id = i.product_id
+WHERE p.slug = 'musical-fountains'
+  AND i.url IN ('/media/client/control-panel.jpg', '/media/client/panel-testing.jpg', '/media/client/control-room.jpg');
